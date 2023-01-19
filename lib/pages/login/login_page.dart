@@ -14,22 +14,28 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   AuthenticationBloc? _authBloc;
+  LoginBloc? _bloc;
 
   @override
   void initState() {
     super.initState();
+    _bloc = BlocProvider.of<LoginBloc>(context);
     _authBloc = BlocProvider.of<AuthenticationBloc>(context);
   }
 
-  _enterToHome() {
+  _enterToHome() async {
+    // _bloc!.add(const SignInEvent(username: 'USER050921', password: '5m19gos'));
     _authBloc!.add(LoggedIn());
-    debugPrint('hited');
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<LoginBloc, LoginState>(
-      listener: ((context, state) {}),
+      listener: ((context, state) {
+        if (state is SignInSuccess) {
+          _authBloc!.add(LoggedIn());
+        }
+      }),
       builder: (context, state) {
         return Scaffold(
           body: Padding(
@@ -40,30 +46,33 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 TextFormField(
                   controller: _usernameController,
+                  keyboardType: TextInputType.text,
                   decoration: InputDecoration(
+                    suffixIcon: const Icon(Icons.abc),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
                     hintText: 'Username',
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 TextFormField(
                   controller: _passwordController,
+                  obscureText: true,
+                  obscuringCharacter: '*',
+                  keyboardType: TextInputType.text,
                   decoration: InputDecoration(
+                    suffixIcon: const Icon(Icons.lock),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
                     hintText: 'Password',
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 ElevatedButton(
-                    // onPressed: () {
-                    //   _authBloc.add(LoggedOut());
-                    // },
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size(100, 50),
                       shape: RoundedRectangleBorder(

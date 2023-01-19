@@ -14,6 +14,18 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
+  @override
+  void initState() {
+    super.initState();
+    
+  }
+
+  @override
+  void dispose() {
+    
+    super.dispose();
+  }
+  
   _logOut() async {
     // String A = '';
     storage.deleteData(boxName: describeEnum(StorageConstants.user));
@@ -31,13 +43,36 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Text('Home Page'),
-                ElevatedButton(
-                    // onPressed: () {
-                    //   _authBloc.add(LoggedOut());
-                    // },
-                    onPressed: _logOut,
-                    child: const Text('gotologin'))
+                TextFormField(
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    labelText: 'Account Number',
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                TextFormField(
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    labelText: 'Account Name',
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                TextFormField(
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    labelText: 'Account Balance',
+                  ),
+                ),
               ],
             ),
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_mockva/shared/authentication/authentication_bloc.dart';
 import 'package:flutter_bloc_mockva/shared/shared.dart';
@@ -7,8 +8,13 @@ import 'package:path_provider/path_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  var appDir = await getApplicationDocumentsDirectory(); 
+  var appDir = await getApplicationDocumentsDirectory();
   Hive.init(appDir.path);
+
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitDown,
+    DeviceOrientation.portraitUp,
+  ]);
 
   runApp(
     MultiBlocProvider(
@@ -35,9 +41,10 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: Routers().route,
-      initialRoute: Routers.main,
+      initialRoute: Routers.home,
+
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      // title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
         //

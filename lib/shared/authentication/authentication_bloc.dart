@@ -19,7 +19,7 @@ class AuthenticationBloc
             value: 'test');
         A = await storage.getString(
             boxName: describeEnum(StorageConstants.user), key: 'sessionStatus');
-        debugPrint('sessingId : $A');
+        debugPrint('sessionId : $A');
         if (A=='test') {
           emit(const AuthenticationUnauthenticated());
         } else {

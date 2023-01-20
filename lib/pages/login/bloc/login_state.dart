@@ -9,14 +9,29 @@ abstract class LoginState extends Equatable {
 
 class LoginInitial extends LoginState {}
 
-class SignInSuccess extends LoginState {
-  const SignInSuccess();
+class SignInSuccessState extends LoginState {
+  const SignInSuccessState(this.model);
+  final LoginResponseModel model;
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [model];
 
   @override
   String toString() {
-    return 'SignInSuccess : ';
+    return 'SignInSuccessState : ${model.toJson()}';
   }
+}
+
+class SignInFailedState extends LoginState {
+  const SignInFailedState({this.message, this.statusCode, this.errorMessage});
+  final String? message;
+  final int? statusCode;
+  final String? errorMessage;
+
+  @override
+  List<Object> get props => [message!, statusCode!, errorMessage!];
+
+  @override
+  String toString() =>
+      'SignInFailedState { message : $message, statusCode: $statusCode, errorMessage: $errorMessage }';
 }

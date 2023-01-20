@@ -13,7 +13,7 @@ class TransferConfirmationPage extends StatefulWidget {
 }
 
 class _TransferConfirmationPageState extends State<TransferConfirmationPage> {
-  late TransferConfimrationBloc _bloc;
+  late TransferConfimrationBloc bloc;
   final TextEditingController _accSrcController = TextEditingController();
   final TextEditingController _accSrcNameController = TextEditingController();
   final TextEditingController _accDestController = TextEditingController();
@@ -24,7 +24,7 @@ class _TransferConfirmationPageState extends State<TransferConfirmationPage> {
   void initState() {
     super.initState();
     _accSrcController.text = 'cek';
-    _bloc = BlocProvider.of<TransferConfimrationBloc>(context);
+    bloc = BlocProvider.of<TransferConfimrationBloc>(context);
   }
 
   @override
@@ -32,7 +32,9 @@ class _TransferConfirmationPageState extends State<TransferConfirmationPage> {
     super.dispose();
   }
 
-  _onConfirm() {}
+  _onConfirm() {
+    Navigator.of(context).pushNamed(Routers.receiptTransfer);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -106,11 +108,7 @@ class _TransferConfirmationPageState extends State<TransferConfirmationPage> {
                     height: 15,
                   ),
                   ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context)
-                            .pushNamed(Routers.receiptTransfer);
-                      },
-                      child: const Text('Confirm'))
+                      onPressed: _onConfirm, child: const Text('Confirm'))
                 ],
               ),
             ),

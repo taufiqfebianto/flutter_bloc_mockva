@@ -19,7 +19,7 @@ class ReceiptTransferPage extends StatefulWidget {
 
 class _ReceiptTransferPageState extends State<ReceiptTransferPage> {
   ScreenshotController screenshotController = ScreenshotController();
-  late Uint8List _imageFile;
+
   @override
   void initState() {
     super.initState();
@@ -31,17 +31,17 @@ class _ReceiptTransferPageState extends State<ReceiptTransferPage> {
   }
 
   _onShare() async {
-    // Navigator.of(context).popUntil(ModalRoute.withName(Routers.home));
+  
     await screenshotController
         .capture()
         .then((Uint8List? image) async {
-      // if (image != null) {
+      if (image != null) {
         final directory = await getApplicationDocumentsDirectory();
         final imagePath = await File('${directory.path}/image.png').create();
         debugPrint(imagePath.toString());
-        await imagePath.writeAsBytes(image!);
+        await imagePath.writeAsBytes(image);
         await Share.shareXFiles([XFile(imagePath.path)]);
-      // }
+      }
     });
   }
 

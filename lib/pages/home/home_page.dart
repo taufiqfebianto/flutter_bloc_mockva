@@ -1,7 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bloc_mockva/shared/shared.dart';
+import 'package:flutter_bloc_mockva/models/detail_account_response_model.dart';
 
 import 'bloc/home_bloc.dart';
 
@@ -13,28 +12,28 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  HomeBloc? bloc;
+  late DetailAccountResponseModel model = DetailAccountResponseModel();
 
   @override
   void initState() {
     super.initState();
-    
+    bloc = BlocProvider.of<HomeBloc>(context);
   }
 
   @override
   void dispose() {
-    
     super.dispose();
-  }
-  
-  _logOut() async {
-    // String A = '';
-    storage.deleteData(boxName: describeEnum(StorageConstants.user));
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HomeBloc, HomeState>(
-      listener: ((context, state) {}),
+      listener: ((context, state) {
+        if (state is GetAccountDetailSuccess) {
+          model = state.model;
+        }
+      }),
       builder: (context, state) {
         return Scaffold(
           body: Padding(
@@ -48,7 +47,7 @@ class _HomePageState extends State<HomePage> {
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    labelText: 'Account Number',
+                    labelText: model.id,
                   ),
                 ),
                 const SizedBox(
@@ -59,7 +58,7 @@ class _HomePageState extends State<HomePage> {
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    labelText: 'Account Name',
+                    labelText: model.name,
                   ),
                 ),
                 const SizedBox(
@@ -70,7 +69,7 @@ class _HomePageState extends State<HomePage> {
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    labelText: 'Account Balance',
+                    labelText: model.balance,
                   ),
                 ),
               ],

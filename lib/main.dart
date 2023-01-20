@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,6 +16,12 @@ void main() async {
     DeviceOrientation.portraitDown,
     DeviceOrientation.portraitUp,
   ]);
+
+  await storage.deleteData(boxName: describeEnum(StorageConstants.user));
+  storage.putString(
+      boxName: describeEnum(StorageConstants.user),
+      key: 'sessionId',
+      value: '');
 
   runApp(
     MultiBlocProvider(

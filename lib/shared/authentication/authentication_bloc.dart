@@ -12,15 +12,9 @@ class AuthenticationBloc
     on<AuthenticationEvent>((event, emit) {});
     on<AppStarted>(
       (event, emit) async {
-        String? A = '-';
-        storage.putString(
-            boxName: describeEnum(StorageConstants.user),
-            key: 'sessionStatus',
-            value: 'test');
-        A = await storage.getString(
-            boxName: describeEnum(StorageConstants.user), key: 'sessionStatus');
-        debugPrint('sessionId : $A');
-        if (A=='test') {
+        String sessionId = await storage.getString(
+            boxName: describeEnum(StorageConstants.user), key: 'sessionId');
+        if (sessionId == '') {
           emit(const AuthenticationUnauthenticated());
         } else {
           emit(const AuthenticationAuthenticated());

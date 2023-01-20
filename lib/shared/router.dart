@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_mockva/pages/hometab/hometab_page.dart';
 import 'package:flutter_bloc_mockva/pages/login/login_page.dart';
+import 'package:flutter_bloc_mockva/pages/splash/splash_page.dart';
 import '../pages/account/bloc/account_bloc.dart';
 import '../pages/history/bloc/history_bloc.dart';
 import '../pages/home/bloc/home_bloc.dart';
@@ -25,7 +26,6 @@ class Routers {
           bloc: BlocProvider.of<AuthenticationBloc>(context),
           builder: (BuildContext context, AuthenticationState state) {
             if (state is AuthenticationAuthenticated) {
-              debugPrint('state : $state');
               return MultiBlocProvider(
                 providers: [
                   BlocProvider<HometabBloc>(
@@ -49,7 +49,6 @@ class Routers {
             }
 
             if (state is AuthenticationUnauthenticated) {
-              debugPrint('state : $state');
               return MultiBlocProvider(providers: [
                 BlocProvider<LoginBloc>(
                   create: (BuildContext context) => LoginBloc(),
@@ -57,7 +56,7 @@ class Routers {
               ], child: const LoginPage());
             }
 
-            return Container(child: const Center(child: CircularProgressIndicator.adaptive()));
+            return const SplashPage();
           });
     },
     Routers.transferConfirmation: (BuildContext context) {

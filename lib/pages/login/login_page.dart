@@ -19,22 +19,29 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
+    _usernameController.text = 'USER050921';
+    _passwordController.text = '5m19gos';
     _bloc = BlocProvider.of<LoginBloc>(context);
     _authBloc = BlocProvider.of<AuthenticationBloc>(context);
   }
 
-  _enterToHome() async {
-    // _bloc!.add(const SignInEvent(username: 'USER050921', password: '5m19gos'));
-    _authBloc!.add(LoggedIn());
+  _enterToHome() {
+    _bloc!.add(
+      SignInEvent(
+        username: _usernameController.text.trim(),
+        password: _passwordController.text.trim(),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<LoginBloc, LoginState>(
       listener: ((context, state) {
-        if (state is SignInSuccess) {
+        if (state is SignInSuccessState) {
           _authBloc!.add(LoggedIn());
         }
+        if (state is SignInFailedState) {}
       }),
       builder: (context, state) {
         return Scaffold(

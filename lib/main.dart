@@ -49,7 +49,6 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       routes: Routers().route,
       initialRoute: Routers.home,
-
       debugShowCheckedModeBanner: false,
       // title: 'Flutter Demo',
       theme: ThemeData(

@@ -6,3 +6,4 @@ abstract class ReceiptTransferEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+

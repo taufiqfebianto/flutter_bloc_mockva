@@ -7,11 +7,14 @@ import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../../models/models.dart';
+import '../../../shared/shared.dart';
 import 'bloc/receipt_transfer_bloc.dart';
 
 class ReceiptTransferPage extends StatefulWidget {
-  final TransferResponseModel? model;
-  const ReceiptTransferPage({super.key, this.model});
+  final TransferResponseModel model;
+  final TransferInquiryResponseModel data;
+  const ReceiptTransferPage(
+      {super.key, required this.model, required this.data});
 
   @override
   State<ReceiptTransferPage> createState() => _ReceiptTransferPageState();
@@ -31,10 +34,7 @@ class _ReceiptTransferPageState extends State<ReceiptTransferPage> {
   }
 
   _onShare() async {
-  
-    await screenshotController
-        .capture()
-        .then((Uint8List? image) async {
+    await screenshotController.capture().then((Uint8List? image) async {
       if (image != null) {
         final directory = await getApplicationDocumentsDirectory();
         final imagePath = await File('${directory.path}/image.png').create();
@@ -46,7 +46,7 @@ class _ReceiptTransferPageState extends State<ReceiptTransferPage> {
   }
 
   _onClose() {
-    Navigator.of(context).pop();
+    Navigator.of(context).popUntil(ModalRoute.withName(Routers.home));
   }
 
   @override
@@ -83,7 +83,7 @@ class _ReceiptTransferPageState extends State<ReceiptTransferPage> {
                   padding: const EdgeInsets.all(20),
                   height: 600,
                   decoration: BoxDecoration(
-                    color: Colors.black12,
+                    color: Colors.white,
                     border: Border.all(
                       color: Colors.black12,
                     ),
@@ -98,20 +98,22 @@ class _ReceiptTransferPageState extends State<ReceiptTransferPage> {
                       const Center(
                         child: Text(
                           'Receipt Transaction',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                       ),
                       const SizedBox(
                         height: 30,
                       ),
                       Row(
-                        children: const [
-                          Expanded(
+                        children: [
+                          const Expanded(
                             flex: 30,
                             child: Text(
                               'Account Source',
                             ),
                           ),
-                          Expanded(
+                          const Expanded(
                             flex: 2,
                             child: Text(
                               ':',
@@ -120,20 +122,22 @@ class _ReceiptTransferPageState extends State<ReceiptTransferPage> {
                           Expanded(
                             flex: 30,
                             child: Text(
-                              ' widget.model.accountSrcId',
+                              widget.model.accountSrcId!,
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ),
                         ],
                       ),
                       Row(
-                        children: const [
-                          Expanded(
+                        children: [
+                          const Expanded(
                             flex: 30,
                             child: Text(
                               'Account Source Name',
                             ),
                           ),
-                          Expanded(
+                          const Expanded(
                             flex: 2,
                             child: Text(
                               ':',
@@ -142,20 +146,22 @@ class _ReceiptTransferPageState extends State<ReceiptTransferPage> {
                           Expanded(
                             flex: 30,
                             child: Text(
-                              'widget.model.accountSrcName',
+                              widget.data.accountSrcName!,
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ),
                         ],
                       ),
                       Row(
-                        children: const [
-                          Expanded(
+                        children: [
+                          const Expanded(
                             flex: 30,
                             child: Text(
                               'Account Destination',
                             ),
                           ),
-                          Expanded(
+                          const Expanded(
                             flex: 2,
                             child: Text(
                               ':',
@@ -164,20 +170,22 @@ class _ReceiptTransferPageState extends State<ReceiptTransferPage> {
                           Expanded(
                             flex: 30,
                             child: Text(
-                              'widget.model.accountDstId',
+                              widget.model.accountDstId!,
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ),
                         ],
                       ),
                       Row(
-                        children: const [
-                          Expanded(
+                        children: [
+                          const Expanded(
                             flex: 30,
                             child: Text(
                               'Account Destination Name',
                             ),
                           ),
-                          Expanded(
+                          const Expanded(
                             flex: 2,
                             child: Text(
                               ':',
@@ -186,20 +194,22 @@ class _ReceiptTransferPageState extends State<ReceiptTransferPage> {
                           Expanded(
                             flex: 30,
                             child: Text(
-                              'widget.model.accountDstName',
+                              widget.data.accountDstName!,
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ),
                         ],
                       ),
                       Row(
-                        children: const [
-                          Expanded(
+                        children: [
+                          const Expanded(
                             flex: 30,
                             child: Text(
                               'Ammount ',
                             ),
                           ),
-                          Expanded(
+                          const Expanded(
                             flex: 2,
                             child: Text(
                               ':',
@@ -208,20 +218,22 @@ class _ReceiptTransferPageState extends State<ReceiptTransferPage> {
                           Expanded(
                             flex: 30,
                             child: Text(
-                              'widget.model.amount',
+                              widget.model.amount.toString(),
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ),
                         ],
                       ),
                       Row(
-                        children: const [
-                          Expanded(
+                        children: [
+                          const Expanded(
                             flex: 30,
                             child: Text(
                               'Reference Number',
                             ),
                           ),
-                          Expanded(
+                          const Expanded(
                             flex: 2,
                             child: Text(
                               ':',
@@ -230,20 +242,22 @@ class _ReceiptTransferPageState extends State<ReceiptTransferPage> {
                           Expanded(
                             flex: 30,
                             child: Text(
-                              'widget.model.clientRef',
+                              widget.model.clientRef!,
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ),
                         ],
                       ),
                       Row(
-                        children: const [
-                          Expanded(
+                        children: [
+                          const Expanded(
                             flex: 30,
                             child: Text(
                               'Transaction Timestamp',
                             ),
                           ),
-                          Expanded(
+                          const Expanded(
                             flex: 2,
                             child: Text(
                               ':',
@@ -252,7 +266,9 @@ class _ReceiptTransferPageState extends State<ReceiptTransferPage> {
                           Expanded(
                             flex: 30,
                             child: Text(
-                              'widget.model.transactionTimestamp',
+                              widget.model.transactionTimestamp.toString(),
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ),
                         ],
@@ -274,7 +290,8 @@ class _ReceiptTransferPageState extends State<ReceiptTransferPage> {
                           Expanded(
                             flex: 30,
                             child: Text(
-                              'VALUE',
+                              'Success',
+                              style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ),
                         ],

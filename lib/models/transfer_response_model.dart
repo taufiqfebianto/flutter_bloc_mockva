@@ -11,7 +11,7 @@ class TransferResponseModel {
 
   String? accountSrcId;
   String? accountDstId;
-  int? amount;
+  double? amount;
   DateTime? transactionTimestamp;
   String? clientRef;
 
@@ -24,7 +24,7 @@ class TransferResponseModel {
       TransferResponseModel(
         accountSrcId: json["accountSrcId"],
         accountDstId: json["accountDstId"],
-        amount: json["amount"],
+        amount: json["amount"].toDouble(),
         transactionTimestamp: DateTime.parse(json["transactionTimestamp"]),
         clientRef: json["clientRef"],
       );

@@ -6,3 +6,13 @@ abstract class HistoryEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class GetHistoryTransactionEvent extends HistoryEvent {
+  @override
+  List<Object> get props => [];
+
+  @override
+  String toString() {
+    return 'GetHistoryTransactionEvent : ';
+  }
+}

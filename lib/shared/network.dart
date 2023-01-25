@@ -49,10 +49,10 @@ class Network {
 
     String sessionId = await storage.getString(
         boxName: describeEnum(StorageConstants.user), key: 'sessionId');
-    if (sessionId != '') {
+debugPrint(sessionId);
+    if (sessionId.isNotEmpty) {
       headers['_sessionId'] = sessionId;
     }
-
     _dio.options.headers = headers;
     try {
       Response response;

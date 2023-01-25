@@ -12,13 +12,27 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  final TextEditingController _accSrcController = TextEditingController();
+  final TextEditingController _accNameController = TextEditingController();
+  final TextEditingController _balanceController = TextEditingController();
+
   HomeBloc? bloc;
-  late DetailAccountResponseModel model = DetailAccountResponseModel();
+  late DetailAccountResponseModel _model = DetailAccountResponseModel();
 
   @override
   void initState() {
     super.initState();
     bloc = BlocProvider.of<HomeBloc>(context);
+    bloc!.add(GetAccountDetailEvent());
+    // loadData();
+  }
+
+  loadData() {
+    // bloc!.add(GetAccountDetailEvent());
+    _accSrcController.text = _model.id!;
+    _accNameController.text = _model.name!;
+    _balanceController.text = _model.balance!.toString();
   }
 
   @override
@@ -31,7 +45,9 @@ class _HomePageState extends State<HomePage> {
     return BlocConsumer<HomeBloc, HomeState>(
       listener: ((context, state) {
         if (state is GetAccountDetailSuccess) {
-          model = state.model;
+          _model = state.model;
+          //  state.model.id;
+          loadData();
         }
       }),
       builder: (context, state) {
@@ -43,33 +59,41 @@ class _HomePageState extends State<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 TextFormField(
+                  controller: _accSrcController,
+                  enabled: false,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    labelText: model.id,
+                    labelText: 'Account Number',
+                    
                   ),
+                  
                 ),
                 const SizedBox(
                   height: 15,
                 ),
                 TextFormField(
+                  controller: _accNameController,
+                  enabled: false,
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    labelText: model.name,
+                    labelText: 'Account Name',
                   ),
                 ),
                 const SizedBox(
                   height: 15,
                 ),
                 TextFormField(
+                  controller: _balanceController,
+                  enabled: false,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    labelText: model.balance,
+                    labelText: 'Balance',
                   ),
                 ),
               ],

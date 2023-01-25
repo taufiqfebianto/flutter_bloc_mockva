@@ -22,6 +22,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             boxName: describeEnum(StorageConstants.user),
             value: response.id,
             key: 'sessionId');
+        await storage.putString(
+            boxName: describeEnum(StorageConstants.user),
+            value: response.accountId,
+            key: 'accountId');
         emit(SignInSuccessState(response));
       } on DioError catch (e) {
         emit(SignInFailedState(

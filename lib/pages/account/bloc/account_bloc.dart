@@ -16,6 +16,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
           await repo.signOut();
           emit(SignOutSuccessState());
         } on DioError catch (e) {
+          // ignore: use_rethrow_when_possible
           throw e;
         }
       },

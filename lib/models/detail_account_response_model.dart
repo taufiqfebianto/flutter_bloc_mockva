@@ -11,7 +11,7 @@ class DetailAccountResponseModel {
   String? id;
   String? name;
   String? username;
-  String? balance;
+  double? balance;
 
   factory DetailAccountResponseModel.fromRawJson(String str) =>
       DetailAccountResponseModel.fromJson(json.decode(str));
@@ -23,7 +23,7 @@ class DetailAccountResponseModel {
         id: json["id"],
         name: json["name"],
         username: json["username"],
-        balance: json["balance"],
+        balance: json["balance"].toDouble(),
       );
 
   Map<String, dynamic> toJson() => {

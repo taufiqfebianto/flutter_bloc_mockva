@@ -62,13 +62,16 @@ class Routers {
     Routers.transferConfirmation: (BuildContext context) {
       return BlocProvider<TransferConfimrationBloc>(
         create: (BuildContext context) => TransferConfimrationBloc(),
-        child: const TransferConfirmationPage(),
+        child: TransferConfirmationPage(
+            model: (ModalRoute.of(context) as dynamic).settings.arguments),
       );
     },
     Routers.receiptTransfer: (BuildContext context) {
+      List<dynamic> args =
+          (ModalRoute.of(context) as dynamic).settings.arguments;
       return BlocProvider<ReceiptTransferBloc>(
         create: (BuildContext context) => ReceiptTransferBloc(),
-        child: const ReceiptTransferPage(),
+        child: ReceiptTransferPage(model: args[0], data: args[1]),
       );
     },
   };

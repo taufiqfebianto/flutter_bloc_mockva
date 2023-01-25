@@ -15,7 +15,7 @@ class TransferInquiryResponseModel {
   String? accountDstId;
   String? accountSrcName;
   String? accountDstName;
-  int? amount;
+  double? amount;
 
   factory TransferInquiryResponseModel.fromRawJson(String str) =>
       TransferInquiryResponseModel.fromJson(json.decode(str));
@@ -29,7 +29,7 @@ class TransferInquiryResponseModel {
         accountDstId: json["accountDstId"],
         accountSrcName: json["accountSrcName"],
         accountDstName: json["accountDstName"],
-        amount: json["amount"],
+        amount: json["amount"].toDouble(),
       );
 
   Map<String, dynamic> toJson() => {

@@ -55,13 +55,37 @@ class _TransferConfirmationPageState extends State<TransferConfirmationPage> {
     Navigator.of(context).pop();
   }
 
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          message,
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontWeight: FontWeight.w300,
+            fontSize: 16.0,
+          ),
+        ),
+        backgroundColor: Colors.blueAccent,
+        behavior: SnackBarBehavior.floating,
+        elevation: 1.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(50.0),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<TransferConfimrationBloc, TransferConfimrationState>(
         listener: ((BuildContext context, TransferConfimrationState state) {
       if (state is TransferConfirmationSuccessState) {
-        Navigator.of(context)
-            .pushNamed(Routers.receiptTransfer, arguments: [state.model,widget.model]);
+        Navigator.of(context).pushNamed(Routers.receiptTransfer,
+            arguments: [state.model, widget.model]);
+      }
+      if (state is FailedState) {
+        _showSnackBar(state.message!);
       }
     }), builder: (BuildContext context, TransferConfimrationState state) {
       return Scaffold(

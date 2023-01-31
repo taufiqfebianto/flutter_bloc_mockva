@@ -22,8 +22,8 @@ class SignInSuccessState extends LoginState {
   }
 }
 
-class SignInFailedState extends LoginState {
-  const SignInFailedState({this.message, this.statusCode, this.errorMessage});
+class FailedState extends LoginState {
+  const FailedState({this.message, this.statusCode, this.errorMessage});
   final String? message;
   final int? statusCode;
   final String? errorMessage;
@@ -33,5 +33,5 @@ class SignInFailedState extends LoginState {
 
   @override
   String toString() =>
-      'SignInFailedState { message : $message, statusCode: $statusCode, errorMessage: $errorMessage }';
+      'FailedState { message : $message, statusCode: $statusCode, errorMessage: $errorMessage }';
 }

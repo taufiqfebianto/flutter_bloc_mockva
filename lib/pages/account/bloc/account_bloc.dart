@@ -1,7 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc_mockva/repository/app_repo.dart';
+
+import '../../../shared/shared.dart';
 
 part 'account_event.dart';
 part 'account_state.dart';
@@ -15,9 +16,11 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
         try {
           await repo.signOut();
           emit(SignOutSuccessState());
-        } on DioError catch (e) {
-          // ignore: use_rethrow_when_possible
-          throw e;
+        } on NetworkException catch (e) {
+          emit(FailedState(
+              message: e.responseMessage,
+              statusCode: e.httpStatus,
+              errorMessage: e.data));
         }
       },
     );

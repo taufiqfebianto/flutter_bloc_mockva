@@ -20,7 +20,7 @@ class AppRepo {
           content: parameters,
           contentType: 'application/json');
       return LoginResponseModel.fromJson(data);
-    } on DioError catch (e) {
+    } on NetworkException catch (e) {
       throw e;
     }
   }

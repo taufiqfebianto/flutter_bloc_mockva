@@ -57,6 +57,7 @@ class _HomeTabPageState extends State<HomeTabPage> {
       if (state == HometabState.home) {
         title = 'Home';
       }
+      
     }), builder: (context, state) {
       return Scaffold(
         appBar: AppBar(

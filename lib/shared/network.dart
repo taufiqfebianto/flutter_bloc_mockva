@@ -49,7 +49,7 @@ class Network {
 
     String sessionId = await storage.getString(
         boxName: describeEnum(StorageConstants.user), key: 'sessionId');
-debugPrint(sessionId);
+
     if (sessionId.isNotEmpty) {
       headers['_sessionId'] = sessionId;
     }
@@ -62,7 +62,13 @@ debugPrint(sessionId);
 
       return response.data;
     } on DioError catch (e) {
-      return (e.error);
+      if (e.type == DioErrorType.response) {
+        throw NetworkException(
+          httpStatus: e.response!.statusCode!,
+          data: e.response!.statusMessage!,
+          responseMessage: e.response!.data!,
+        );
+      }
     }
   }
 
@@ -92,7 +98,13 @@ debugPrint(sessionId);
 
       return response.data;
     } on DioError catch (e) {
-      return (e.error);
+      if (e.type == DioErrorType.response) {
+        throw NetworkException(
+          httpStatus: e.response!.statusCode!,
+          data: e.response!.statusMessage!,
+          responseMessage: e.response!.data!,
+        );
+      }
     }
   }
 
@@ -123,7 +135,13 @@ debugPrint(sessionId);
 
       return response.data;
     } on DioError catch (e) {
-      return (e.error);
+      if (e.type == DioErrorType.response) {
+        throw NetworkException(
+          httpStatus: e.response!.statusCode!,
+          data: e.response!.statusMessage!,
+          responseMessage: e.response!.data!,
+        );
+      }
     }
   }
 }

@@ -29,11 +29,33 @@ class _HistoryPageState extends State<HistoryPage> {
     super.dispose();
   }
 
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          message,
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontWeight: FontWeight.w300,
+            fontSize: 16.0,
+          ),
+        ),
+        backgroundColor: Colors.blueAccent,
+        behavior: SnackBarBehavior.floating,
+        elevation: 1.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(50.0),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HistoryBloc, HistoryState>(listener: ((context, state) {
-      if (state is GetHistoryTransactionSuccessState) {
-        debugPrint(state.toString());
+      if (state is GetHistoryTransactionSuccessState) {}
+      if (state is FailedState) {
+        _showSnackBar(state.message!);
       }
     }), builder: (context, state) {
       return Scaffold(

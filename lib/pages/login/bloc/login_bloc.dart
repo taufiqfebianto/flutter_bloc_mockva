@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc_mockva/models/models.dart';
@@ -27,11 +26,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             value: response.accountId,
             key: 'accountId');
         emit(SignInSuccessState(response));
-      } on DioError catch (e) {
-        emit(SignInFailedState(
-            message: e.response?.data,
-            statusCode: e.response?.statusCode,
-            errorMessage: e.response?.statusMessage));
+      } on NetworkException catch (e) {
+        emit(FailedState(
+            message: e.responseMessage,
+            statusCode: e.httpStatus,
+            errorMessage: e.data));
       }
     });
   }

@@ -12,7 +12,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   final TextEditingController _accSrcController = TextEditingController();
   final TextEditingController _accNameController = TextEditingController();
   final TextEditingController _balanceController = TextEditingController();
@@ -40,6 +39,27 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          message,
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontWeight: FontWeight.w300,
+            fontSize: 16.0,
+          ),
+        ),
+        backgroundColor: Colors.blueAccent,
+        behavior: SnackBarBehavior.floating,
+        elevation: 1.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(50.0),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HomeBloc, HomeState>(
@@ -48,6 +68,9 @@ class _HomePageState extends State<HomePage> {
           _model = state.model;
           //  state.model.id;
           loadData();
+        }
+        if (state is FailedState) {
+          _showSnackBar(state.message!);
         }
       }),
       builder: (context, state) {
@@ -66,9 +89,7 @@ class _HomePageState extends State<HomePage> {
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
                     labelText: 'Account Number',
-                    
                   ),
-                  
                 ),
                 const SizedBox(
                   height: 15,
